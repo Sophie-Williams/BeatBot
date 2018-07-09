@@ -115,22 +115,55 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer)
 		Sclip[0].x = 0;
 		Sclip[0].y = 0;
 		Sclip[0].w = 33;
-		Sclip[0].h = 57;
+		Sclip[0].h = 58;
 
 		Sclip[1].x = 33;
 		Sclip[1].y = 0;
 		Sclip[1].w = 33;
-		Sclip[1].h = 57;
+		Sclip[1].h = 58;
 
 		Sclip[2].x = 66;
 		Sclip[2].y = 0;
 		Sclip[2].w = 33;
-		Sclip[2].h = 57;
+		Sclip[2].h = 58;
 
 		Sclip[3].x = 99;
 		Sclip[3].y = 0;
 		Sclip[3].w = 33;
-		Sclip[3].h = 57;
+		Sclip[3].h = 58;
+	}
+	return success;
+}
+
+bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_)
+{
+	bool success = true;
+	if (!this->loadFromFile(path, gRenderer))
+	{
+		printf("could not load character \n");
+		success = false;
+	}
+	else
+	{
+		Sclip[0].x = 0;
+		Sclip[0].y = 0;
+		Sclip[0].w = width_;
+		Sclip[0].h = height_;
+
+		Sclip[1].x = width_;
+		Sclip[1].y = 0;
+		Sclip[1].w = width_;
+		Sclip[1].h = height_;
+
+		Sclip[2].x = width_ * 2;
+		Sclip[2].y = 0;
+		Sclip[2].w = width_;
+		Sclip[2].h = height_;
+
+		Sclip[3].x = width_ * 3;
+		Sclip[3].y = 0;
+		Sclip[3].w = width_;
+		Sclip[3].h = height_;
 	}
 	return success;
 }

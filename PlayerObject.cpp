@@ -140,23 +140,47 @@ void PlayerObject::HandleInputAction(SDL_Event events)
 void PlayerObject::set_clips()
 {
 	//Clip the sprites
-	right_clip_[0].x = 0;
-	right_clip_[0].y = 0;
+	right_clip_[0].x = 0;            
+	right_clip_[0].y = 0;               
 	right_clip_[0].w = PLAYER_WIDTH;
 	right_clip_[0].h = PLAYER_HEIGHT;
 
 	right_clip_[1].x = PLAYER_WIDTH;
-	right_clip_[1].y = 0;
-	right_clip_[1].w = PLAYER_WIDTH;
+	right_clip_[1].y = 0;            
+	right_clip_[1].w = PLAYER_WIDTH;  
 	right_clip_[1].h = PLAYER_HEIGHT;
-
+	    
 	right_clip_[2].x = PLAYER_WIDTH * 2;
-	right_clip_[2].y = 0;
-	right_clip_[2].w = PLAYER_WIDTH;
-	right_clip_[2].h = PLAYER_HEIGHT;
-
+	right_clip_[2].y = 0;              
+	right_clip_[2].w = PLAYER_WIDTH;   
+	right_clip_[2].h = PLAYER_HEIGHT;   
+	                                         
 	right_clip_[3].x = PLAYER_WIDTH * 3;
+	right_clip_[3].y = 0;                  
+	right_clip_[3].w = PLAYER_WIDTH;    
+	right_clip_[3].h = PLAYER_HEIGHT;    
+}
+
+void PlayerObject::set_clips(int width_ = 30, int height_ =45)
+{
+	//Clip the sprites
+	right_clip_[0].x = 0;
+	right_clip_[0].y = 0;
+	right_clip_[0].w = width_;
+	right_clip_[0].h = height_;
+
+	right_clip_[1].x = width_;
+	right_clip_[1].y = 0;
+	right_clip_[1].w = width_;
+	right_clip_[1].h = height_;
+
+	right_clip_[2].x = width_ * 2;
+	right_clip_[2].y = 0;
+	right_clip_[2].w = width_;
+	right_clip_[2].h = height_;
+
+	right_clip_[3].x = width_ * 3;
 	right_clip_[3].y = 0;
-	right_clip_[3].w = PLAYER_WIDTH;
-	right_clip_[3].h = PLAYER_HEIGHT;
+	right_clip_[3].w = width_;
+	right_clip_[3].h = height_;
 }

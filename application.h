@@ -25,5 +25,6 @@ private:
 	Character app_satan_;
 	Character app_fire_;
 	PlayerObject app_player_;
-
+	Character app_soi_;
+	//PlayerObject soi_;
 };

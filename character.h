@@ -21,6 +21,7 @@ public:
 	int getWidth();
 	int getHeight();
 	bool loadCharacter(std::string path, SDL_Renderer* gRenderer);
+	bool loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_);
 	void showCharacter(std::string path, SDL_Renderer* gRenderer, bool isDead, int x, int y);
 private:
 	SDL_Texture* mTexture;

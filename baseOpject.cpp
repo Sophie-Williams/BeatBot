@@ -67,7 +67,7 @@ bool BaseOpject::LoadImageGame(std::string path, SDL_Renderer* gRenderer)
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface != NULL)
 	{
-		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 80, 80, 80));
+		SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0x80, 0x80, 0x80));
 
 		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
 		if (newTexture != NULL)

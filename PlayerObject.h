@@ -15,6 +15,7 @@ public:
 	void HandleInputAction(SDL_Event);
 	void Move();
 	void set_clips();
+	void set_clips(int width_, int height_);
 private:
 	int frame_;
 	int x_val_; 
