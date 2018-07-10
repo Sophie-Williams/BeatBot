@@ -2,8 +2,10 @@
 #include "PlayerObject.h"
 
 
+
 const int PLAYER_WIDTH = 30;
 const int PLAYER_HEIGHT = 45;
+
 
 PlayerObject::PlayerObject()
 {
@@ -163,7 +165,7 @@ void PlayerObject::set_clips()
 
 void PlayerObject::set_clips(int width_ = 30, int height_ =45)
 {
-	//Clip the sprites
+	
 	right_clip_[0].x = 0;
 	right_clip_[0].y = 0;
 	right_clip_[0].w = width_;
@@ -183,4 +185,5 @@ void PlayerObject::set_clips(int width_ = 30, int height_ =45)
 	right_clip_[3].y = 0;
 	right_clip_[3].w = width_;
 	right_clip_[3].h = height_;
+	
 }

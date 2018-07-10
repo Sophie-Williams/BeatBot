@@ -18,6 +18,7 @@ Character::~Character()
 	free();
 }
 
+
 bool Character::loadFromFile(std::string path, SDL_Renderer* gRenderer)
 {
 	free();
@@ -46,27 +47,8 @@ bool Character::loadFromFile(std::string path, SDL_Renderer* gRenderer)
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
-void Character::setColor(Uint8 red, Uint8 green, Uint8 blue)
-{
-	//Modulate texture rgb
-	SDL_SetTextureColorMod(mTexture, red, green, blue);
-}
 
-void Character::setBlendMode(SDL_BlendMode blending)
-{
-	//Set blending function
-	SDL_SetTextureBlendMode(mTexture, blending);
-}
-
-void Character::setAlpha(Uint8 alpha)
-{
-	//Modulate texture alpha
-	SDL_SetTextureAlphaMod(mTexture, alpha);
-}
-
-
-
-void Character::free()
+void Character::freeCharacter()
 {
 	if (this->mTexture != NULL)
 	{
@@ -92,20 +74,11 @@ void Character::render(int x, int y, SDL_Rect* clip, SDL_Renderer* gRenderer)
 	SDL_RenderCopy(gRenderer, mTexture, clip, &renderQuad);
 }
 
-int Character::getWidth()
-{
-	return mWidth;
-}
-
-int Character::getHeight()
-{
-	return mHeight;
-}
 
 bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer)
 {
 	bool success = true;
-	if (!this->loadFromFile(path, gRenderer))
+	if (!loadFromFile(path, gRenderer))
 	{
 		printf("could not load character \n");
 		success = false;
@@ -138,7 +111,7 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer)
 bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_)
 {
 	bool success = true;
-	if (!this->loadFromFile(path, gRenderer))
+	if (!loadFromFile(path, gRenderer))
 	{
 		printf("could not load character \n");
 		success = false;

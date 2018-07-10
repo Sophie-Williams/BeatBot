@@ -11,7 +11,6 @@ public:
 
 	bool LoadImageGame(std::string path, SDL_Renderer* gRenderer);
 	void free();
-
 	void setColor(Uint8 red, Uint8 screen, Uint8 blue);
 	void setBlendMode(SDL_BlendMode blending);
 	void setAlpha(Uint8 alpha);

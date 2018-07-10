@@ -14,6 +14,7 @@
 #define  SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 587
 
+
 #define RENDER_DRAW_COLOR 0xFF
 
 namespace cmf

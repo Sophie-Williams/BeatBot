@@ -65,17 +65,28 @@ void Application::run()
 		return;
 	}
 	//Clear screen
-
+	
+	// opject tinh
 	app_background_.SetPos(0, -587);
-	if (!app_background_.LoadImageGame("map.png", app_renderer_))
+	app_bag1.SetPos(420,320);
+	if (!app_background_.LoadImageGame("map2.png", app_renderer_))
 	{
 		printf("could not load opject \n");
 		return;
 	}
-
+	if (!app_bag1.LoadImageGame("nhanvat/bag.png", app_renderer_))
+	{
+		printf("coult not load bag1 \n");
+		return;
+	}
 	if (!app_satan_.loadCharacter("quy.png", app_renderer_))
 	{
 		std::cout << "Load bot failed";
+		return;
+	}
+	if (!app_satan_1.loadCharacter("quy1.png", app_renderer_,30,45))
+	{
+		std::cout << "Load bot? failed";
 		return;
 	}
 	
@@ -93,7 +104,7 @@ void Application::run()
 
 	//Create Player
 	app_player_.LoadImageGame("nhanvat/player3.png", app_renderer_);
-	app_player_.SetPos(200, 300);
+	app_player_.SetPos(290, 480);
 	app_player_.set_clips();
 
 
@@ -122,16 +133,18 @@ void Application::run()
 
 		//Show background
 		app_background_.BaseRender(app_renderer_);
-
+		app_bag1.BaseRender(app_renderer_);
 
 		//Show bot
-		app_satan_.showCharacter("quy.png", app_renderer_, is_quit,250,350);
-		app_fire_.showCharacter("nhanvat/lua2.png", app_renderer_, is_quit,330,360);
-		app_soi_.showCharacter("nhanvat/cho_soi.png", app_renderer_, is_quit, 200, 400);
+		app_satan_.showCharacter("quy.png", app_renderer_, is_quit,130,250);
+		app_satan_1.showCharacter("quy1.png", app_renderer_, is_quit, 290, 20);
+		app_fire_.showCharacter("nhanvat/lua2.png", app_renderer_, is_quit,350,470);
+		app_soi_.showCharacter("nhanvat/cho_soi.png", app_renderer_, is_quit, 220, 80);
 		
 
 
 		app_player_.Move();
+
 		app_player_.Show(app_renderer_);
 
 
