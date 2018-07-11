@@ -23,23 +23,38 @@ PlayerObject::~PlayerObject()
 
 void PlayerObject::Show(SDL_Renderer* screen)
 {
-
-	if (status_ != -1)
+	if (status_ == 8)
 	{
-		frame_++;
+		for (int i = 0; i < 4; i++)
+		{
+			SDL_Rect* currentClip = &right_clip_[i];
+			BaseRender(screen, currentClip);
+		}
+
+		status_ = 0;
+		LoadImageGame("nhanvat/player3.png", screen);
+		set_clips();
 	}
 	else
 	{
-		frame_ = 0;
-	}
+		if (status_ != -1)
+		{
+			frame_++;
+		}
+		else
+		{
+			frame_ = 0;
+		}
 
-	if (frame_ >= 4)
-	{
-		frame_ = 0;
-	}
+		if (frame_ >= 4)
+		{
+			frame_ = 0;
+		}
 
-	SDL_Rect* currentClip = &right_clip_[frame_];
-	BaseRender(screen, currentClip);
+		SDL_Rect* currentClip = &right_clip_[frame_];
+		BaseRender(screen, currentClip);
+	}
+	
 }
 
 void PlayerObject::Move()
@@ -83,7 +98,7 @@ void PlayerObject::Move()
 }
 
 
-void PlayerObject::HandleInputAction(SDL_Event events)
+void PlayerObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 {
 	if (events.type == SDL_KEYDOWN) // am
 	{
@@ -111,6 +126,13 @@ void PlayerObject::HandleInputAction(SDL_Event events)
 			{
 				status_ = 3;
 				y_val_ = 10;
+				break;
+			}
+			case 113:
+			{
+				LoadImageGame("nhanvat/main_skill.png", screen);
+				set_clips2();
+				status_ = 8; // Press Q
 				break;
 			}
 		}
@@ -163,27 +185,32 @@ void PlayerObject::set_clips()
 	right_clip_[3].h = PLAYER_HEIGHT;    
 }
 
-void PlayerObject::set_clips(int width_ = 30, int height_ =45)
+void PlayerObject::set_clips2()
 {
-	
-	right_clip_[0].x = 0;
-	right_clip_[0].y = 0;
-	right_clip_[0].w = width_;
-	right_clip_[0].h = height_;
+	//Ensure that, LoadImage Function must be called before
+	int width_ = rect_.w/4;
+	int height_ = rect_.h;
 
-	right_clip_[1].x = width_;
-	right_clip_[1].y = 0;
-	right_clip_[1].w = width_;
-	right_clip_[1].h = height_;
+	if (width_ > 0 && height_ > 0)
+	{
+		right_clip_[0].x = 0;
+		right_clip_[0].y = 0;
+		right_clip_[0].w = width_;
+		right_clip_[0].h = height_;
 
-	right_clip_[2].x = width_ * 2;
-	right_clip_[2].y = 0;
-	right_clip_[2].w = width_;
-	right_clip_[2].h = height_;
+		right_clip_[1].x = width_;
+		right_clip_[1].y = 0;
+		right_clip_[1].w = width_;
+		right_clip_[1].h = height_;
 
-	right_clip_[3].x = width_ * 3;
-	right_clip_[3].y = 0;
-	right_clip_[3].w = width_;
-	right_clip_[3].h = height_;
-	
+		right_clip_[2].x = width_ * 2;
+		right_clip_[2].y = 0;
+		right_clip_[2].w = width_;
+		right_clip_[2].h = height_;
+
+		right_clip_[3].x = width_ * 3;
+		right_clip_[3].y = 0;
+		right_clip_[3].w = width_;
+		right_clip_[3].h = height_;
+	}
 }

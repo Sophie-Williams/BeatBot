@@ -17,9 +17,5 @@
 
 #define RENDER_DRAW_COLOR 0xFF
 
-namespace cmf
-{
-}
-
 
 #endif

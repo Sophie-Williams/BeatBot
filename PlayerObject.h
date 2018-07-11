@@ -13,10 +13,10 @@ public:
 	PlayerObject();
 	~PlayerObject();
 	void Show(SDL_Renderer* screen);
-	void HandleInputAction(SDL_Event);
+	void HandleInputAction(SDL_Event events, SDL_Renderer* screen);
 	void Move();
 	void set_clips();
-	void set_clips(int width_, int height_);
+	void set_clips2();
 private:
 	int frame_;
 	int x_val_; 

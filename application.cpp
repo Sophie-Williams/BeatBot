@@ -119,7 +119,7 @@ void Application::run()
 				is_quit = true;
 			}
 
-			app_player_.HandleInputAction(app_event_);
+			app_player_.HandleInputAction(app_event_, app_renderer_);
 		}
 
 		// Reset and clear
@@ -131,6 +131,7 @@ void Application::run()
 		SDL_RenderClear(app_renderer_);
 
 
+	
 		//Show background
 		app_background_.BaseRender(app_renderer_);
 		app_bag1.BaseRender(app_renderer_);
@@ -144,7 +145,7 @@ void Application::run()
 
 
 		app_player_.Move();
-
+		
 		app_player_.Show(app_renderer_);
 
 

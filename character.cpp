@@ -155,6 +155,6 @@ void Character::showCharacter(std::string path, SDL_Renderer* gRenderer, bool is
 	if (g_frame / 4 >= Frames)
 	{
 		g_frame = 0;
-		SDL_Delay(100);
+		SDL_Delay(50);
 	}
 }
