@@ -17,6 +17,8 @@ public:
 	void Move();
 	void set_clips();
 	void set_clips2();
+	bool get_check_q() const { return  is_check_q_; }
+	void set_check_q(bool cq) { is_check_q_ = cq; }
 private:
 	int frame_;
 	int x_val_; 
@@ -25,6 +27,7 @@ private:
 	int status_;
 	SDL_Rect right_clip_[4];
 	Skill Lightning_q;
+	bool is_check_q_;
 	//SDL_Rect Skill_lightning[4];
 
 };

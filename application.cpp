@@ -2,11 +2,17 @@
 
 #include "application.h"
 #include "commonFunc.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <cmath>
+
 
 Application::Application()
 {
 	app_renderer_ = NULL;
 	app_window_ = NULL;
+	app_font = NULL;
 }
 Application::~Application()
 {
@@ -43,6 +49,14 @@ bool Application::init()
 				printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 				success = false;
 			}
+
+			//Initialize SDL_ttf
+			if ( TTF_Init() == -1)
+			{
+				printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+				success = false;
+			}
+
 		}
 	}
 	return success;
@@ -64,6 +78,17 @@ void Application::run()
 		printf("could not init application \n");
 		return;
 	}
+
+
+	/// testing text
+
+	test.loadText(app_font, "vuong xuan", app_renderer_, 50,253,254,254);
+
+
+	/// end testing text
+
+
+
 	//Clear screen
 	
 	// opject tinh
@@ -109,6 +134,7 @@ void Application::run()
 
 
 	bool is_quit = false;
+	
 	while (!is_quit)
 	{
 		while (SDL_PollEvent(&app_event_) != 0)
@@ -122,6 +148,7 @@ void Application::run()
 			app_player_.HandleInputAction(app_event_, app_renderer_);
 		}
 
+
 		// Reset and clear
 		SDL_SetRenderDrawColor(app_renderer_, 
 							   RENDER_DRAW_COLOR, 
@@ -131,16 +158,19 @@ void Application::run()
 		SDL_RenderClear(app_renderer_);
 
 
-	
+
 		//Show background
 		app_background_.BaseRender(app_renderer_);
 		app_bag1.BaseRender(app_renderer_);
 
+
+		test.render(app_renderer_, 290, 480, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
 		//Show bot
-		app_satan_.showCharacter("quy.png", app_renderer_, is_quit,130,250);
-		app_satan_1.showCharacter("quy1.png", app_renderer_, is_quit, 290, 20);
-		app_fire_.showCharacter("nhanvat/lua2.png", app_renderer_, is_quit,350,470);
-		app_soi_.showCharacter("nhanvat/cho_soi.png", app_renderer_, is_quit, 220, 80);
+		app_satan_.showCharacter("quy.png", app_renderer_,120,260);
+		app_satan_1.showCharacter("quy1.png", app_renderer_, 290, 20);
+		app_fire_.showCharacter("nhanvat/lua2.png", app_renderer_,350,470);
+		app_soi_.showCharacter("nhanvat/cho_soi.png", app_renderer_, 220, 80);
 		
 
 
@@ -148,9 +178,31 @@ void Application::run()
 		
 		app_player_.Show(app_renderer_);
 
+		/* test position */
+
+		SDL_Rect temp = app_player_.GetRect();
+		printf("%d %d \n", temp.x, temp.y); 
+
+
+		checkDead();
 
 		SDL_RenderPresent(app_renderer_);
 	}
 
 	close();
+}
+
+void Application::checkDead()
+{
+	bool is_check_q = app_player_.get_check_q();
+
+	if (is_check_q)
+	{
+		SDL_Rect rect_player = app_player_.GetRect();
+		printf("qskill: %d %d \n", rect_player.x, rect_player.y);
+		app_satan_.checkDead(rect_player, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
+
+		app_player_.set_check_q(false);
+	}
+	return;
 }

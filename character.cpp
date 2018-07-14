@@ -12,6 +12,7 @@ Character::Character()
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
+	isDead = false;
 }
 Character::~Character()
 {
@@ -105,8 +106,51 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer)
 		Sclip[3].w = 33;
 		Sclip[3].h = 58;
 	}
+	// set postion
+
+	this->rect_.w = 33;
+	this->rect_.h = 58;
 	return success;
 }
+
+bool Character::setDead(std::string path, SDL_Renderer * gRenderer, int width, int height)
+{
+	bool success = true;
+	if (!loadFromFile(path, gRenderer))
+	{
+		printf("could not load character \n");
+		success = false;
+	}
+	else
+	{
+		Sclip[0].x = 0;
+		Sclip[0].y = 0;
+		Sclip[0].w = width;
+		Sclip[0].h = height;
+
+		Sclip[1].x = 0;
+		Sclip[1].y = 0;
+		Sclip[1].w = width;
+		Sclip[1].h = height;
+
+		Sclip[2].x = 0;
+		Sclip[2].y = 0;
+		Sclip[2].w = width;
+		Sclip[2].h = height;
+
+		Sclip[3].x = 0;
+		Sclip[3].y = 0;
+		Sclip[3].w = width;
+		Sclip[3].h = height;
+
+	}
+	this->rect_.w = width;
+	this->rect_.h = height;
+;
+	return success;
+}
+
+
 
 bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_)
 {
@@ -138,10 +182,12 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int wid
 		Sclip[3].w = width_;
 		Sclip[3].h = height_;
 	}
+	this->rect_.w = width_;
+	this->rect_.h = height_;
 	return success;
 }
 
-void Character::showCharacter(std::string path, SDL_Renderer* gRenderer, bool isDead, int x, int y)
+void Character::showCharacter(std::string path, SDL_Renderer* gRenderer, int x, int y)
 {
 
 	SDL_Rect* currentClip = &Sclip[g_frame / 4];
@@ -157,4 +203,29 @@ void Character::showCharacter(std::string path, SDL_Renderer* gRenderer, bool is
 		g_frame = 0;
 		SDL_Delay(50);
 	}
+	
+	this->rect_.x = x;
+	this->rect_.y = y;
+
+}
+
+void Character::setDead2(bool dead)
+{
+	isDead = dead;
+	return;
+}
+
+void Character::checkDead(const SDL_Rect & rect_player, std::string path, SDL_Renderer * gRenderer, int w_, int h_)
+{
+	int alpha = 10;
+	
+	if ( (rect_player.x >= this->rect_.x - alpha) && (rect_player.x <= this->rect_.x + this->rect_.w + alpha))
+	{
+		if ((rect_player.y >= this->rect_.y - alpha) && (rect_player.y <= this->rect_.y + this->rect_.h + alpha))
+		{
+			printf("set dead \n");
+			this->setDead(path, gRenderer, w_, h_);
+		}
+	}
+	return;
 }

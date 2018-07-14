@@ -13,6 +13,7 @@ PlayerObject::PlayerObject()
 	x_val_ = 0;
 	y_val_ = 0;
 	status_ = -1;
+	is_check_q_ = false;
 }
 
 
@@ -30,7 +31,6 @@ void PlayerObject::Show(SDL_Renderer* screen)
 			SDL_Rect* currentClip = &right_clip_[i];
 			BaseRender(screen, currentClip);
 		}
-
 		status_ = 0;
 		LoadImageGame("nhanvat/player3.png", screen);
 		set_clips();
@@ -132,6 +132,8 @@ void PlayerObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
 			{
 				LoadImageGame("nhanvat/main_skill.png", screen);
 				set_clips2();
+				is_check_q_ = true;
+				//this->Q_skill = rect_;
 				status_ = 8; // Press Q
 				break;
 			}
