@@ -23,11 +23,17 @@ public:
 
 
 private:
+
+
 	SDL_Event app_event_;
 	SDL_Renderer* app_renderer_;
 	SDL_Window* app_window_;
 	TTF_Font *app_font;
+
+	/////
+
 	BaseOpject app_background_;
+	BaseOpject Menu;
 	BaseOpject app_bag1; // bag 1
 	Character app_satan_; // bot satan 1
 	Character app_satan_1; // bot satan 2
@@ -38,13 +44,6 @@ private:
 
 	// text ............
 
-	Text Playgame;
-	Text Exit;
-	Text Hp;
-	Text Mana;
-
-	Text Copying;
-
-	Text test;
+	Text text[10];
 
 };

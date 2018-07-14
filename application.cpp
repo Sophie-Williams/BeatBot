@@ -82,7 +82,7 @@ void Application::run()
 
 	/// testing text
 
-	test.loadText(app_font, "vuong xuan", app_renderer_, 50,253,254,254);
+	//test.loadText(app_font, "vuong xuan", app_renderer_, 50,253,254,254);
 
 
 	/// end testing text
@@ -134,6 +134,67 @@ void Application::run()
 
 
 	bool is_quit = false;
+
+	while (!is_quit)
+	{
+		Menu.SetPos(0, 0);
+		Menu.LoadImageGame("menu.png", app_renderer_);
+		while (SDL_PollEvent(&app_event_) != 0)
+		{
+			//User requests quit
+			if (app_event_.type == SDL_QUIT)
+			{
+				is_quit = true;
+			}
+			else if (app_event_.type == SDL_MOUSEBUTTONDOWN)
+			{
+				is_quit = true;
+			}
+
+		}
+		SDL_SetRenderDrawColor(app_renderer_,
+			RENDER_DRAW_COLOR,
+			RENDER_DRAW_COLOR,
+			RENDER_DRAW_COLOR,
+			RENDER_DRAW_COLOR);
+		SDL_RenderClear(app_renderer_);
+
+		Menu.BaseRender(app_renderer_ );
+
+		/// top
+
+		text[0].loadText(app_font, "HI-SCORE", app_renderer_, 25, 255, 0, 0);
+		text[0].render(app_renderer_, 250, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
+		text[4].loadText(app_font, "1UP", app_renderer_, 25, 255, 0, 0);
+		text[4].render(app_renderer_, 100, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
+		text[5].loadText(app_font, "2UP", app_renderer_, 25, 255, 0, 0);
+		text[5].render(app_renderer_, 480, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
+
+		///
+
+		// conten
+
+		text[1].loadText(app_font, "PlayGame", app_renderer_, 30, 253, 254, 254);
+		text[1].render(app_renderer_, 250, 300, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
+		text[2].loadText(app_font, "Exit", app_renderer_, 30, 253, 254, 254);
+		text[2].render(app_renderer_, 250, 330, NULL, 0.0, NULL, SDL_FLIP_NONE);
+		///
+
+		/// bottom
+
+		text[3].loadText(app_font, "© 2018 Vuong Xuan", app_renderer_, 20, 253, 254, 254);
+		text[3].render(app_renderer_, 220, 520, NULL, 0.0, NULL, SDL_FLIP_NONE);
+		SDL_RenderPresent(app_renderer_);
+	}
+
+
+	is_quit = false;
+
+
 	
 	while (!is_quit)
 	{
@@ -164,7 +225,7 @@ void Application::run()
 		app_bag1.BaseRender(app_renderer_);
 
 
-		test.render(app_renderer_, 290, 480, NULL, 0.0, NULL, SDL_FLIP_NONE);
+		//test.render(app_renderer_, 290, 480, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 		//Show bot
 		app_satan_.showCharacter("quy.png", app_renderer_,120,260);
