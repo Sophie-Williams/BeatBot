@@ -14,7 +14,7 @@ Text::~Text()
 
 void Text::free()
 {
-	//Free texture if it exists
+
 	if (mTexture != NULL)
 	{
 		SDL_DestroyTexture(mTexture);
@@ -28,7 +28,7 @@ void Text::free()
 bool Text::loadFromRenderedText(std::string textureText, SDL_Renderer *app_renderer,
 	TTF_Font *app_font, SDL_Color textColor)
 {
-	//Get rid of preexisting texture
+
 	free();
 
 	//Render text surface

@@ -1,6 +1,6 @@
 
 #include "PlayerObject.h"
-
+#include <SDL_mixer.h>
 
 
 const int PLAYER_WIDTH = 30;
@@ -13,6 +13,8 @@ PlayerObject::PlayerObject()
 	x_val_ = 0;
 	y_val_ = 0;
 	status_ = -1;
+	hp = 20;
+	mana = 20;
 	is_check_q_ = false;
 }
 
@@ -98,39 +100,46 @@ void PlayerObject::Move()
 }
 
 
-void PlayerObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen)
+void PlayerObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen, Mix_Chunk* walk, Mix_Chunk* skill)
 {
+	int speed = 10; // default 
 	if (events.type == SDL_KEYDOWN) // am
 	{
 		switch (events.key.keysym.sym)
 		{
 			case SDLK_RIGHT:
 			{
+				Mix_PlayChannel(-1, walk, 0);
 				status_ = 0;
-				x_val_ = 10;
+				x_val_ = speed;
 				break;
 			}
 			case SDLK_LEFT:
 			{
+				Mix_PlayChannel(-1, walk, 0);
 				status_ = 1;
-				x_val_ = -10;
+				x_val_ = -speed;
 				break;
 			}
 			case SDLK_UP:
 			{
+				Mix_PlayChannel(-1, walk, 0);
 				status_ = 2;
-				y_val_= -10;
+				y_val_= -speed;
 				break;
 			}
 			case SDLK_DOWN:
 			{
+				Mix_PlayChannel(-1, walk, 0);
 				status_ = 3;
-				y_val_ = 10;
+				y_val_ = speed;
 				break;
 			}
 			case 113:
 			{
+
 				LoadImageGame("nhanvat/main_skill.png", screen);
+				Mix_PlayChannel(-1, skill, 0);
 				set_clips2();
 				is_check_q_ = true;
 				//this->Q_skill = rect_;

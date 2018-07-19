@@ -31,7 +31,7 @@ void BaseOpject::free()
 
 void BaseOpject::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
-	//Modulate texture rgb
+	//set texture rgb
 	SDL_SetTextureColorMod(mTexture, red, green, blue);
 }
 
@@ -43,7 +43,6 @@ void BaseOpject::setBlendMode(SDL_BlendMode blending)
 
 void BaseOpject::setAlpha(Uint8 alpha)
 {
-	//Modulate texture alpha
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 

@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include "character.h"
+#include "PlayerObject.h"
 
 static int g_frame = 0;
 
@@ -12,6 +13,8 @@ Character::Character()
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
+	hp = 10;
+	mana = 10;
 	isDead = false;
 }
 Character::~Character()
@@ -187,21 +190,21 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int wid
 	return success;
 }
 
-void Character::showCharacter(std::string path, SDL_Renderer* gRenderer, int x, int y)
+void Character::showCharacter(SDL_Renderer* gRenderer, int x, int y)
 {
 
 	SDL_Rect* currentClip = &Sclip[g_frame / 4];
 	render(x, y, currentClip, gRenderer);
 	//Update screen
 
-	SDL_Delay(100);
+	SDL_Delay(60);
 	//Go to next frame
 	++g_frame;
 	//Cycle animation
 	if (g_frame / 4 >= Frames)
 	{
 		g_frame = 0;
-		SDL_Delay(50);
+		SDL_Delay(20);
 	}
 	
 	this->rect_.x = x;
@@ -215,17 +218,49 @@ void Character::setDead2(bool dead)
 	return;
 }
 
-void Character::checkDead(const SDL_Rect & rect_player, std::string path, SDL_Renderer * gRenderer, int w_, int h_)
+void Character::checkDead(PlayerObject &app_player_, std::string path, SDL_Renderer * gRenderer,
+	int w_, int h_)
 {
-	int alpha = 10;
+	SDL_Rect rect_player = app_player_.GetRect();
+	int distance_skill_hunman = 10;
 	
-	if ( (rect_player.x >= this->rect_.x - alpha) && (rect_player.x <= this->rect_.x + this->rect_.w + alpha))
+	// skill of humman
+
+	if ( (rect_player.x >= this->rect_.x - distance_skill_hunman) && (rect_player.x <= this->rect_.x + this->rect_.w 
+		+ distance_skill_hunman))
 	{
-		if ((rect_player.y >= this->rect_.y - alpha) && (rect_player.y <= this->rect_.y + this->rect_.h + alpha))
+		if ((rect_player.y >= this->rect_.y - distance_skill_hunman) && (rect_player.y <= this->rect_.y + this->rect_.h 
+			+ distance_skill_hunman))
 		{
-			printf("set dead \n");
-			this->setDead(path, gRenderer, w_, h_);
+			hp -= 2;
+			printf("hp bot - 5 \n");
 		}
 	}
+
+	// set dead if hp <= 0
+
+	if(hp<=0) this->setDead(path, gRenderer, w_, h_);
+
+
+	/// skill of bot
+
+	
+	int distance_skill_bot = 10;
+
+	if ((rect_player.x >= this->rect_.x - distance_skill_bot) && (rect_player.x <= this->rect_.x + this->rect_.w
+		+ distance_skill_bot))
+	{
+		if ((rect_player.y >= this->rect_.y - distance_skill_bot) && (rect_player.y <= this->rect_.y + this->rect_.h 
+			+ distance_skill_bot))
+		{
+			app_player_.setHP(app_player_.getHP() - 2);
+			printf("hp player - 2 \n");
+			printf("hp player: %d \n", app_player_.getHP());
+		}
+	}
+
+	
 	return;
 }
+
+

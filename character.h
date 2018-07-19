@@ -5,6 +5,7 @@
 #include <string>
 #include <stddef.h>
 #include "baseOpject.h"
+#include "PlayerObject.h"
 
 const int Frames = 4; // defaut
 
@@ -19,13 +20,17 @@ public:
 	bool loadCharacter(std::string path, SDL_Renderer* gRenderer);
 	bool setDead(std::string path, SDL_Renderer* gRenderer, int width, int height);
 	bool loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_);
-	void showCharacter(std::string path, SDL_Renderer* gRenderer, int x, int y);
+	void showCharacter(SDL_Renderer* gRenderer, int x, int y);
 	void setDead2(bool dead);
-	void checkDead(const SDL_Rect & rect_player, std::string path, SDL_Renderer * gRenderer, int w_, int h_);
+	void checkDead(PlayerObject &app_player_, std::string path, SDL_Renderer * gRenderer, int w_, int h_);
+
+	
 private:
 	//SDL_Texture* mTexture;
 	int mWidth;
 	int mHeight;
 	bool isDead;
+	int hp;
+	int mana;
 	SDL_Rect Sclip[Frames];
 };
