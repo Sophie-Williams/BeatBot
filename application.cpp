@@ -286,7 +286,8 @@ void Application::run()
 		// info player
 
 		text[11].loadText(app_font, std::to_string( app_player_.getScore() ) , app_renderer_, 25, 225, 255, 255);
-		text[11].render(app_renderer_, 600, 530, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
+		text[11].render(app_renderer_, 20, 530, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 		/// end
 		for (int i = 0; i < bot_list_.size(); ++i)
@@ -298,11 +299,7 @@ void Application::run()
 		{
 			item_list_.at(i)->BaseRender(app_renderer_);
 		}
-		//bot_list_[0]->showCharacter(app_renderer_, 120, 260);
-		//bot_list_[1]->showCharacter(app_renderer_, 260 , 130);
-		//bot_list_[2]->showCharacter(app_renderer_, 170 , 90);
-		//bot_list_[3]->showCharacter(app_renderer_, 130, 445);
-		//bot_list_[4]->showCharacter(app_renderer_, 260, 280);
+		
 
 		
 

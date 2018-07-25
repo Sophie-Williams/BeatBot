@@ -255,7 +255,7 @@ void Character::checkDead(PlayerObject &app_player_, std::string path, SDL_Rende
 
 	if (hp <= 0 )
 	{
-
+		app_player_.addScore();
 		this->setDead(path, gRenderer, w_, h_);
 		this->isDead = true;
 	}
