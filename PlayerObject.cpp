@@ -13,9 +13,11 @@ PlayerObject::PlayerObject()
 	x_val_ = 0;
 	y_val_ = 0;
 	status_ = -1;
-	hp = 20;
+	hp = 100;
 	mana = 20;
 	is_check_q_ = false;
+	playerDead = false;
+	score = 0;
 }
 
 
@@ -34,7 +36,7 @@ void PlayerObject::Show(SDL_Renderer* screen)
 			BaseRender(screen, currentClip);
 		}
 		status_ = 0;
-		LoadImageGame("nhanvat/player3.png", screen);
+		LoadImageGame("image/player3.png", screen);
 		set_clips();
 	}
 	else
@@ -138,7 +140,7 @@ void PlayerObject::HandleInputAction(SDL_Event events, SDL_Renderer* screen, Mix
 			case 113:
 			{
 
-				LoadImageGame("nhanvat/main_skill.png", screen);
+				LoadImageGame("image/main_skill.png", screen);
 				Mix_PlayChannel(-1, skill, 0);
 				set_clips2();
 				is_check_q_ = true;

@@ -21,6 +21,10 @@ public:
 	void set_check_q(bool cq) { is_check_q_ = cq; }
 	void setHP(int hp_) { hp = hp_; }
 	int getHP() { return hp; }
+	bool isDead() { return playerDead; }
+	void setDead() { playerDead = true; }
+	void addScore() { score += 1; }
+	int getScore() { return score; }
 private:
 	int frame_;
 	int x_val_; 
@@ -32,6 +36,8 @@ private:
 	SDL_Rect left_clip_[4];
 	Skill Lightning_q;
 	bool is_check_q_;
+	bool playerDead;
+	int score;
 	//SDL_Rect Skill_lightning[4];
 
 };

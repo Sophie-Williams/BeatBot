@@ -84,7 +84,7 @@ bool Text::loadText(TTF_Font *gFont, std::string textToLoad, SDL_Renderer* app_r
 	bool success = true;
 
 	//Open the font
-	gFont = TTF_OpenFont("pixel.ttf", size);
+	gFont = TTF_OpenFont("font\\pixel.ttf", size);
 	if (gFont == NULL)
 	{
 		printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());

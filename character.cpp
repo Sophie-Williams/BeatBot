@@ -13,10 +13,24 @@ Character::Character()
 	mTexture = NULL;
 	mWidth = 0;
 	mHeight = 0;
-	hp = 10;
+	hp = 20;
 	mana = 10;
 	isDead = false;
 }
+
+
+Character::Character(const int& x, const int& y) 
+{ 
+	rect_.x = x, rect_.y = y; 
+
+	mTexture = NULL;
+	mWidth = 0;
+	mHeight = 0;
+	hp = 20;
+	mana = 10;
+	isDead = false;
+}
+
 Character::~Character()
 {
 	free();
@@ -190,11 +204,11 @@ bool Character::loadCharacter(std::string path, SDL_Renderer* gRenderer, int wid
 	return success;
 }
 
-void Character::showCharacter(SDL_Renderer* gRenderer, int x, int y)
+void Character::showCharacter(SDL_Renderer* gRenderer)
 {
 
 	SDL_Rect* currentClip = &Sclip[g_frame / 4];
-	render(x, y, currentClip, gRenderer);
+	render(rect_.x, rect_.y, currentClip, gRenderer);
 	//Update screen
 
 	SDL_Delay(60);
@@ -207,8 +221,8 @@ void Character::showCharacter(SDL_Renderer* gRenderer, int x, int y)
 		SDL_Delay(20);
 	}
 	
-	this->rect_.x = x;
-	this->rect_.y = y;
+	//this->rect_.x = x;
+	//this->rect_.y = y;
 
 }
 
@@ -226,20 +240,27 @@ void Character::checkDead(PlayerObject &app_player_, std::string path, SDL_Rende
 	
 	// skill of humman
 
-	if ( (rect_player.x >= this->rect_.x - distance_skill_hunman) && (rect_player.x <= this->rect_.x + this->rect_.w 
+	if ((rect_player.x >= this->rect_.x - distance_skill_hunman) && (rect_player.x <= this->rect_.x + this->rect_.w
 		+ distance_skill_hunman))
 	{
-		if ((rect_player.y >= this->rect_.y - distance_skill_hunman) && (rect_player.y <= this->rect_.y + this->rect_.h 
+		if ((rect_player.y >= this->rect_.y - distance_skill_hunman) && (rect_player.y <= this->rect_.y + this->rect_.h
 			+ distance_skill_hunman))
 		{
-			hp -= 2;
+			hp -= 5;
 			printf("hp bot - 5 \n");
 		}
 	}
 
 	// set dead if hp <= 0
 
-	if(hp<=0) this->setDead(path, gRenderer, w_, h_);
+	if (hp <= 0 )
+	{
+
+		this->setDead(path, gRenderer, w_, h_);
+		this->isDead = true;
+	}
+
+
 
 
 	/// skill of bot
@@ -259,7 +280,10 @@ void Character::checkDead(PlayerObject &app_player_, std::string path, SDL_Rende
 		}
 	}
 
-	
+	if (app_player_.getHP() <= 0)
+	{
+		app_player_.setDead();
+	}
 	return;
 }
 

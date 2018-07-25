@@ -121,42 +121,45 @@ void Application::run()
 
 	/// end
 	// opject tinh
-	app_background_.SetPos(0, -587);
+	app_background_.SetPos(0, 0);
 
-	if (!app_background_.LoadImageGame("map2.png", app_renderer_))
+	if (!app_background_.LoadImageGame("image/bg.png", app_renderer_))
 	{
 		printf("could not load opject \n");
 		return;
 	}
 	
 	/*
-	if (!app_soi_.loadCharacter("nhanvat/cho_soi.png", app_renderer_,64,33))
+	if (!app_soi_.loadCharacter("image/cho_soi.png", app_renderer_,64,33))
 	{
 		std::cout << "Load cho soi failed";
 		return;
 	}
 	*/
-	if (!hell.loadCharacter("nhanvat/hell.png", app_renderer_, 50, 30))
+	hell.SetPos(180, 180);
+	if (!hell.loadCharacter("image/hell.png", app_renderer_, 50, 30))
 	{
 		std::cout << "Load cho soi failed";
 		return;
 	}
 
 	//Create Player
-	app_player_.LoadImageGame("nhanvat/player3.png", app_renderer_);
-	app_player_.SetPos(290, 480);
+	app_player_.LoadImageGame("image/player3.png", app_renderer_);
+	app_player_.SetPos(350, 480);
 	app_player_.set_clips();
 
 	// load menu
 
 	Menu.SetPos(0, 0);
-	Menu.LoadImageGame("menu.png", app_renderer_);
+	Menu.LoadImageGame("image/menu.png", app_renderer_);
 
+	loadText();
 	loadMusic();
 
 	bool is_quit = false;
 	
 
+	/////////////////////// game menu
 
 	while (!is_quit)
 	{
@@ -197,46 +200,46 @@ void Application::run()
 
 		/// top
 
-		text[0].loadText(app_font, "HI-SCORE", app_renderer_, 25, 255, 0, 0);
+		
 		text[0].render(app_renderer_, 250, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-		text[6].loadText(app_font, "0000", app_renderer_, 25, 255, 255, 255);
+		
 		text[6].render(app_renderer_, 250, 70, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 
 
-		text[4].loadText(app_font, "1UP", app_renderer_, 25, 255, 0, 0);
+	
 		text[4].render(app_renderer_, 100, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
-		text[7].loadText(app_font, "00", app_renderer_, 25, 225, 255, 255);
+
 		text[7].render(app_renderer_, 100, 70, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 
-		text[5].loadText(app_font, "2UP", app_renderer_, 25, 255, 0, 0);
+	
 		text[5].render(app_renderer_, 480, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
-		text[8].loadText(app_font, "00", app_renderer_, 25, 225, 255, 255);
+	
 		text[8].render(app_renderer_, 480, 70, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 
 		///// logo in here
 
-		text[9].loadText(app_font, "Game Logo", app_renderer_, 40, 253, 254, 254);
+	
 		text[9].render(app_renderer_, 220, 210, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-		hell.showCharacter(app_renderer_, 180, 180);
+		hell.showCharacter(app_renderer_);
 
 
 		// conten
 
-		text[1].loadText(app_font, "PlayGame", app_renderer_, 30, 253, 254, 254);
+
 		text[1].render(app_renderer_, 250, 330, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-		text[2].loadText(app_font, "Exit", app_renderer_, 30, 253, 254, 254);
+
 		text[2].render(app_renderer_, 250, 360, NULL, 0.0, NULL, SDL_FLIP_NONE);
 		///
 
 		/// bottom
 
-		text[3].loadText(app_font, "© Summer 2018 Vuong Xuan", app_renderer_, 18, 253, 254, 254);
+
 		text[3].render(app_renderer_, 220, 530, NULL, 0.0, NULL, SDL_FLIP_NONE);
 		SDL_RenderPresent(app_renderer_);
 	}
@@ -248,6 +251,7 @@ void Application::run()
 	Mix_PauseMusic();
 	/// end
 
+	//////////////////////// game running
 	
 	while (!is_quit)
 	{
@@ -279,13 +283,26 @@ void Application::run()
 
 		// new bot in vector
 		 
+		// info player
 
+		text[11].loadText(app_font, std::to_string( app_player_.getScore() ) , app_renderer_, 25, 225, 255, 255);
+		text[11].render(app_renderer_, 600, 530, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-		bot_list_[0]->showCharacter(app_renderer_, 120, 260);
-		bot_list_[1]->showCharacter(app_renderer_, 260 , 130);
-		bot_list_[2]->showCharacter(app_renderer_, 170 , 70);
-		bot_list_[3]->showCharacter(app_renderer_, 130, 445);
-		bot_list_[4]->showCharacter(app_renderer_, 260, 280);
+		/// end
+		for (int i = 0; i < bot_list_.size(); ++i)
+		{
+			bot_list_.at(i)->showCharacter(app_renderer_);
+		}
+
+		for (int i = 0; i < item_list_.size(); ++i)
+		{
+			item_list_.at(i)->BaseRender(app_renderer_);
+		}
+		//bot_list_[0]->showCharacter(app_renderer_, 120, 260);
+		//bot_list_[1]->showCharacter(app_renderer_, 260 , 130);
+		//bot_list_[2]->showCharacter(app_renderer_, 170 , 90);
+		//bot_list_[3]->showCharacter(app_renderer_, 130, 445);
+		//bot_list_[4]->showCharacter(app_renderer_, 260, 280);
 
 		
 
@@ -297,14 +314,63 @@ void Application::run()
 		/* test position */
 
 		SDL_Rect temp = app_player_.GetRect();
-		printf("%d %d \n", temp.x, temp.y); 
+		printf("toa do player: %d %d \n", temp.x, temp.y); 
 
 
 		checkDead();
 
 		SDL_RenderPresent(app_renderer_);
+
+		is_quit = app_player_.isDead();
 	}
 
+
+
+
+	//////////////////////// game over
+
+	if (Mix_PlayingMusic() == 0)
+	{
+		//Play the music
+		if (Mix_PlayMusic(app_music_menu, -1) == -1)
+		{
+			return;
+		}
+	}
+
+	SDL_SetRenderDrawColor(app_renderer_,
+		RENDER_DRAW_COLOR,
+		RENDER_DRAW_COLOR,
+		RENDER_DRAW_COLOR,
+		RENDER_DRAW_COLOR);
+	SDL_RenderClear(app_renderer_);
+
+	/*Menu.BaseRender(app_renderer_);
+	text[10].render(app_renderer_, 250, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);*/
+
+	is_quit = false;
+
+	while (!is_quit)
+	{
+
+		while (SDL_PollEvent(&app_event_) != 0)
+		{
+			//User requests quit
+			if (app_event_.type == SDL_QUIT)
+			{
+				is_quit = true;
+			}
+		}
+
+		bool is_dead = app_player_.isDead();
+		if (is_dead == true)
+		{
+			Menu.BaseRender(app_renderer_);
+			text[10].render(app_renderer_, 250, 50, NULL, 0.0, NULL, SDL_FLIP_NONE);
+			SDL_RenderPresent(app_renderer_);
+
+		}
+	}
 	close();
 }
 
@@ -314,16 +380,58 @@ void Application::checkDead()
 
 	if (is_check_q)
 	{
-		//SDL_Rect rect_player = app_player_.GetRect();
-		bot_list_[0]->checkDead(app_player_, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
-		bot_list_[1]->checkDead(app_player_, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
-		bot_list_[2]->checkDead(app_player_, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
-		bot_list_[3]->checkDead(app_player_, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
-		bot_list_[4]->checkDead(app_player_, "nhanvat/quy_dead.png", app_renderer_, 45, 30);
+
+		for (int i = 0; i < bot_list_.size(); ++i)
+		{
+
+			bot_list_.at(i)->checkDead(app_player_, "image/quy_dead.png", app_renderer_, 45, 30);
+			if (bot_list_.at(i)->GetIsDead() == true)
+			{
+				bot_list_.erase(bot_list_.begin() + i);
+			}
+		}
+
 		app_player_.set_check_q(false);
 	}
 
 	return;
+}
+
+void Application::loadText()
+{
+	text[0].loadText(app_font, "HI-SCORE", app_renderer_, 25, 255, 0, 0);
+
+	text[6].loadText(app_font, "0000", app_renderer_, 25, 255, 255, 255);
+
+	text[4].loadText(app_font, "1UP", app_renderer_, 25, 255, 0, 0);
+
+	text[7].loadText(app_font, "00", app_renderer_, 25, 225, 255, 255);
+
+
+	text[5].loadText(app_font, "2UP", app_renderer_, 25, 255, 0, 0);
+	
+	text[8].loadText(app_font, "00", app_renderer_, 25, 225, 255, 255);
+	
+
+
+	///// logo in here
+
+	text[9].loadText(app_font, "Game Logo", app_renderer_, 40, 253, 254, 254);
+	text[10].loadText(app_font, "Game Over", app_renderer_, 40, 253, 254, 254);
+
+
+	// conten
+
+	text[1].loadText(app_font, "PlayGame", app_renderer_, 30, 253, 254, 254);
+	
+
+	text[2].loadText(app_font, "Exit", app_renderer_, 30, 253, 254, 254);
+
+
+	text[3].loadText(app_font, "© Summer 2018 Vuong Xuan", app_renderer_, 18, 253, 254, 254);
+	
+	//text[11].loadText(app_font,"")
+
 }
 
 
@@ -343,11 +451,10 @@ bool Application::loadMusic()
 	}
 
 	//Load sound effects
-
 	selectSound = Mix_LoadWAV("music/select.wav");
 	if (selectSound == NULL)
 	{
-		printf("Failed to load select sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+		printf("Failed to load  selectSound sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
 
@@ -358,42 +465,15 @@ bool Application::loadMusic()
 		success = false;
 	}
 
-
-	gScratch = Mix_LoadWAV("music/scratch.wav");
-	if (gScratch == NULL)
-	{
-		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-		success = false;
-	}
-
-	gHigh = Mix_LoadWAV("music/high.wav");
-	if (gHigh == NULL)
-	{
-		printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-		success = false;
-	}
-
-	gMedium = Mix_LoadWAV("music/medium.wav");
-	if (gMedium == NULL)
-	{
-		printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-		success = false;
-	}
-
-	gLow = Mix_LoadWAV("music/low.wav");
-	if (gLow == NULL)
-	{
-		printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
-		success = false;
-	}
+	
 	walk = Mix_LoadWAV("music/walk.wav");
-	if (gLow == NULL)
+	if (walk == NULL)
 	{
 		printf("Failed to load walk sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
 	skill = Mix_LoadWAV("music/skill.wav");
-	if (gLow == NULL)
+	if (skill == NULL)
 	{
 		printf("Failed to load skill sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
@@ -403,49 +483,75 @@ bool Application::loadMusic()
 }
 
 
+
 bool Application::initBot()
 {
+	/// bot
+	BaseOpject* item1 = new BaseOpject(); // binh hp 1
+	item1->SetPos(200, 400);
 
-	Character* bot1 = new Character();
-	Character* bot2 = new Character();
-	Character* bot3 = new Character();
-	Character* bot4 = new Character();
-	Character* bot5 = new Character();
+	item_list_.push_back(item1);
+
+	Character* bot1 = new Character(260, 130);
+
+	Character* bot2 = new Character(170, 90);
+
+	Character* bot3 = new Character(130, 445);
+
+	Character* bot4 = new Character(490, 310);
+
+	Character* bot5 = new Character(20, 200);
+
 	bot_list_.push_back(bot1);
 	bot_list_.push_back(bot2);
 	bot_list_.push_back(bot3);
 	bot_list_.push_back(bot4);
 	bot_list_.push_back(bot5);
+
+
 	return true;
 }
 
 void Application::loadBot()
-{
-	if (!bot_list_[0]->loadCharacter("quy.png", app_renderer_))
+{ 
+
+
+	/// load bot
+	if (!bot_list_[0]->loadCharacter("image/quy.png", app_renderer_))
 	{
 		printf("load bot eror \n");
 		return;
 	}
-	if (!bot_list_[1]->loadCharacter("quy.png", app_renderer_))
+	if (!bot_list_[1]->loadCharacter("image/chem.png", app_renderer_,25,30))
 	{
 		printf("load bot eror \n");
 		return;
 	}
-	if (!bot_list_[2]->loadCharacter("quy.png", app_renderer_))
+
+	if (!bot_list_[2]->loadCharacter("image/lemda.png", app_renderer_,25,30))
 	{
 		printf("load bot eror \n");
 		return;
 	}
-	if (!bot_list_[3]->loadCharacter("nhanvat/chem.png", app_renderer_,25,30))
+	
+	if (!bot_list_[3]->loadCharacter("image/bancung.png", app_renderer_, 30, 30))
 	{
 		printf("load bot eror \n");
 		return;
 	}
-	if (!bot_list_[4]->loadCharacter("nhanvat/lemda.png", app_renderer_,25,30))
+	if (!bot_list_[4]->loadCharacter("image/cho_soi.png", app_renderer_, 64, 33))
 	{
 		printf("load bot eror \n");
 		return;
 	}
+
+
+	if (!item_list_[0]->LoadImageGame("image/hp.png", app_renderer_))
+	{
+		printf("can't not load item 1 \n");
+		return;
+	}
+
 
 
 }

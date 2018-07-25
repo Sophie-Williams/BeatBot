@@ -18,7 +18,7 @@ public:
 	SDL_Rect GetRect() const { return rect_; }
 	void BaseRender(SDL_Renderer* gRenderer, SDL_Rect* clip = NULL);
 	SDL_Texture* GetObject() { return mTexture; }
-	//SDL_Rect GetQskill() { return Q_skill; }
+
 protected:
 	SDL_Texture* mTexture;
 	SDL_Rect rect_;

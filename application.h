@@ -26,7 +26,9 @@ public:
 	void run();
 	bool initBot();
 	void loadBot();
+	//void deleteBot();
 	void checkDead();
+	void loadText();
 
 
 private:
@@ -73,7 +75,7 @@ private:
 
 	/////////////// item
 
-	BaseOpject item[10];
+	std::vector<BaseOpject*> item_list_;
 
 	//////////////////
 
@@ -81,6 +83,6 @@ private:
 
 	// text ............
 
-	Text text[10];
+	Text text[12];
 
 };

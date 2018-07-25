@@ -14,16 +14,17 @@ class Character : public BaseOpject
 public:
 	Character();
 	~Character();
+	Character(const int& x, const int& y);
 	bool loadFromFile(std::string path, SDL_Renderer* gRenderer);
 	void freeCharacter();
 	void render(int x, int y, SDL_Rect* clip, SDL_Renderer* gRenderer);
 	bool loadCharacter(std::string path, SDL_Renderer* gRenderer);
 	bool setDead(std::string path, SDL_Renderer* gRenderer, int width, int height);
 	bool loadCharacter(std::string path, SDL_Renderer* gRenderer, int width_, int height_);
-	void showCharacter(SDL_Renderer* gRenderer, int x, int y);
+	void showCharacter(SDL_Renderer* gRenderer);
 	void setDead2(bool dead);
 	void checkDead(PlayerObject &app_player_, std::string path, SDL_Renderer * gRenderer, int w_, int h_);
-
+	bool GetIsDead() const { return isDead; }
 	
 private:
 	//SDL_Texture* mTexture;
